@@ -14,7 +14,7 @@ WORKDIR /usr/src/app
 COPY requirements.txt ./
 RUN sed -i s@/deb.debian.org/@/mirrors.aliyun.com/@g /etc/apt/sources.list \
     && apt-get clean && apt-get update \
-    && apt-get -y install gcc \
+    && apt-get -y install gcc && apt-get clean \
     && pip install --no-cache-dir -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 COPY . .
