@@ -12,7 +12,10 @@ ENV DB_DATABASE='KAMIFKA'
 WORKDIR /usr/src/app
 
 COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+RUN sed -i s@/deb.debian.org/@/mirrors.aliyun.com/@g /etc/apt/sources.list \
+    && apt-get clean && apt-get update \
+    && apt-get -y install gcc \
+    && pip install --no-cache-dir -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 COPY . .
 RUN chmod +x docker-entrypoint.sh
